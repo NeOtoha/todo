@@ -28,7 +28,7 @@ get '/' do
   elsif params[:list].nil? then
     @tasks = current_user.tasks
   else
-    @tasks = List.find(params[:list]).task.had_by(current_user)
+    @tasks = List.find(params[:list]).tasks.had_by(current_user)
   end
   erb :index
 end
@@ -76,12 +76,12 @@ post '/tasks' do
   date = params[:due_date].split('-')
   list = List.find(params[:list])
   if Date.valid_date?(date[0].to_i, date[1].to_i, date[2].to_i)
-  current_user.tasks.create(title: params[:title],
-    due_date: Date.parse(params[:due_date]), list_id: list.id)
-  redirect '/'
-else
-  redirect'/tasks/new'
-end
+    current_user.tasks.create(title: params[:title],
+      due_date: Date.parse(params[:due_date]), list_id: list.id)
+    redirect '/'
+  else
+    redirect'/tasks/new'
+  end
 end
 
 post '/tasks/:id/done' do
@@ -111,7 +111,7 @@ end
 
 post'/tasks/:id'do
   task = Task.find(params[:id])
-  list = List.find(params[:title])
+  list = List.find(params[:list])
   date = params[:due_date].split('-')
 
   if Date.valid_date?(date[0].to_i,date[1].to_i,date[2].to_i)
@@ -126,8 +126,8 @@ post'/tasks/:id'do
 end
 
 get'/tasks/over'do
- @list = List.all
- @tasks = current_user.tasks.where('due_date < ?',Date.today).where(completed: [nil,false])
+ @lists = List.all
+ @tasks = current_user.tasks.where('due_date < ?', Date.today).where(completed: [nil,false])
  erb :index
 end
 

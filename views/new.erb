@@ -6,13 +6,8 @@
         <input type="text" name="due_date" placeholder="〆切"><br>
         リスト:
         <select name="list">
-          <% List.all.each do |list| %>
-            <option value="<%= list.id %>"
-              <% if list.id == @task.list.id %>
-                selected
-              <% end %>>
-              <%=list.name%>
-            </option>
+          <% List.all.each do |list|%>
+            <option value="<%= list.id %>"><%=list.name%></option>
           <% end %>
         </select>
       </div>

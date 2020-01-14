@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_072218) do
+ActiveRecord::Schema.define(version: 2020_01_14_095113) do
 
   create_table "lists", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_072218) do
     t.boolean "completed"
     t.date "due_date"
     t.boolean "star"
+    t.integer "list_id", default: 1
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
